@@ -113,13 +113,6 @@ impl<V> Node<V> {
         }
     }
 
-    pub fn new_internal(left: SubTree<V>, right: SubTree<V>, generation: u64) -> Self {
-        Self {
-            generation,
-            inner: NodeInner::Internal(InternalNode { left, right }),
-        }
-    }
-
     pub fn new_internal_from_node(node: InternalNode<V>, generation: u64) -> Self {
         Self {
             generation,
@@ -212,15 +205,6 @@ impl<V: CryptoHash> SubTree<V> {
         Self::NonEmpty {
             hash: leaf.calc_hash(),
             root: NodeHandle::new_shared(leaf),
-        }
-    }
-
-    pub fn new_internal(left: Self, right: Self, generation: u64) -> Self {
-        let internal = Node::new_internal(left, right, generation);
-
-        Self::NonEmpty {
-            hash: internal.calc_hash(),
-            root: NodeHandle::new_shared(internal),
         }
     }
 
